@@ -1,0 +1,846 @@
+@import "tailwindcss";
+@font-face { font-family: "Geist"; src: url("/fonts/geist-latin.woff2") format("woff2"); font-style: normal; font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Geist Mono"; src: url("/fonts/geist-mono-latin.woff2") format("woff2"); font-style: normal; font-weight: 100 900; font-display: swap; }
+
+:root {
+  color-scheme: dark;
+  font-family: "Geist", "Helvetica Neue", sans-serif;
+  background: var(--void);
+  color: var(--uiInk);
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  cursor: pointer;
+  font: inherit;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button:disabled {
+  cursor: wait;
+  opacity: 0.3;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--neonCyan);
+  outline-offset: 5px;
+}
+button {
+  border: 0;
+}
+button,
+a {
+  touch-action: manipulation;
+}
+.portfolio,
+.canvas-stage {
+  position: fixed;
+  inset: 0;
+}
+.canvas-stage {
+  touch-action: none;
+  background: var(--void);
+}
+.canvas-stage canvas {
+  touch-action: none;
+}
+.gate {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  background: var(--void);
+}
+.gate-content {
+  width: min(720px, 84vw);
+  padding-bottom: 2vh;
+}
+.gate-story {
+  font:
+    12px/1.9 "Geist Mono", ui-monospace,
+    monospace;
+  color: var(--uiDim);
+  letter-spacing: 0.045em;
+  margin: 0 0 32px;
+  animation: gate-in 480ms both;
+}
+.gate h1 {
+  font-size: clamp(82px, 12.7vw, 166px);
+  font-weight: 400;
+  line-height: 0.86;
+  letter-spacing: -0.085em;
+  margin: 0;
+}
+.gate h1 span {
+  display: block;
+  animation: gate-in 480ms both;
+}
+.gate h1 span:last-child {
+  color: var(--neonMagenta);
+}
+.enter-button {
+  margin-top: 50px;
+  background: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--uiInk) 25%, transparent);
+  padding: 16px 0;
+  width: 160px;
+  display: flex;
+  justify-content: space-between;
+  font:
+    13px "Geist Mono", ui-monospace,
+    monospace;
+  animation: button-in 1000ms both;
+}
+.enter-button span {
+  color: var(--neonMagenta);
+  font-size: 20px;
+}
+.enter-button:hover {
+  border-color: var(--neonMagenta);
+}
+@keyframes gate-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes button-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.navigation {
+  position: fixed;
+  z-index: 40;
+  top: 24px;
+  left: 28px;
+  right: 28px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+.wordmark {
+  position: absolute;
+  left: 0;
+  top: 19px;
+  font:
+    10px "Geist Mono", ui-monospace,
+    monospace;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+.wordmark span:first-child {
+  color: var(--neonMagenta);
+}
+.wordmark span:last-child {
+  color: var(--neonCyan);
+}
+nav {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  border: 1px solid color-mix(in srgb, var(--uiInk) 13%, transparent);
+  border-radius: 50px;
+  background: color-mix(in srgb, var(--void) 82%, transparent);
+  backdrop-filter: blur(18px);
+  pointer-events: auto;
+}
+nav button {
+  border-radius: 30px;
+  background: transparent;
+  color: color-mix(in srgb, var(--signWhite) 65%, transparent);
+  font:
+    11px "Geist Mono", ui-monospace,
+    monospace;
+  padding: 13px 19px;
+  min-height: 44px;
+}
+nav button:hover,
+nav button.active {
+  background: color-mix(in srgb, var(--uiInk) 8%, transparent);
+  color: var(--uiInk);
+}
+nav .next-stop {
+  color: var(--uiInk);
+}
+.next-stop span {
+  margin-left: 9px;
+  color: var(--neonPink);
+}
+.nav-divider {
+  width: 1px;
+  height: 17px;
+  background: color-mix(in srgb, var(--uiInk) 15%, transparent);
+}
+.return-button {
+  pointer-events: auto;
+  padding: 10px 18px;
+  border: 1px solid color-mix(in srgb, var(--uiInk) 12%, transparent);
+  border-radius: 30px;
+  background: color-mix(in srgb, var(--void) 85%, transparent);
+  font:
+    10px "Geist Mono", ui-monospace,
+    monospace;
+  color: var(--uiDim);
+  min-height: 36px;
+}
+.return-button span {
+  margin-right: 8px;
+}
+.return-button:hover {
+  color: var(--uiInk);
+}
+.utility-controls {
+  position: fixed;
+  right: 28px;
+  top: 24px;
+  z-index: 65;
+  display: flex;
+  gap: 8px;
+}
+.utility-controls button {
+  height: 38px;
+  min-width: 38px;
+  background: color-mix(in srgb, var(--void) 74%, transparent);
+  color: var(--uiDim);
+  border: 1px solid color-mix(in srgb, var(--uiInk) 13%, transparent);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 0 12px;
+  font:
+    10px "Geist Mono", ui-monospace,
+    monospace;
+}
+.utility-controls button:hover {
+  color: var(--uiInk);
+}
+.world-caption {
+  position: fixed;
+  left: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  writing-mode: vertical-rl;
+  pointer-events: none;
+  color: var(--uiDim);
+}
+.world-caption span:first-child {
+  font:
+    18px "Hiragino Sans",
+    sans-serif;
+  letter-spacing: 0.22em;
+  color: var(--neonPink);
+}
+.world-caption span:last-child {
+  font:
+    8px "Geist Mono", ui-monospace,
+    monospace;
+  letter-spacing: 0.24em;
+}
+.movement-hint {
+  position: fixed;
+  left: 28px;
+  bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--uiDim);
+  font:
+    10px "Geist Mono", ui-monospace,
+    monospace;
+  pointer-events: none;
+}
+.movement-hint i {
+  height: 12px;
+  width: 1px;
+  background: var(--metalDark);
+}
+kbd {
+  display: inline-grid;
+  place-items: center;
+  font:
+    9px "Geist Mono", ui-monospace,
+    monospace;
+  min-width: 18px;
+  height: 20px;
+  border: 1px solid color-mix(in srgb, var(--uiInk) 22%, transparent);
+  border-radius: 3px;
+  margin-right: 3px;
+}
+.movement-hint span kbd:last-child {
+  margin-right: 10px;
+}
+.interact-prompt {
+  position: fixed;
+  z-index: 20;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 21px;
+  border: 1px solid color-mix(in srgb, var(--uiInk) 18%, transparent);
+  background: color-mix(in srgb, var(--void) 85%, transparent);
+  backdrop-filter: blur(12px);
+  border-radius: 32px;
+  font:
+    11px "Geist Mono", ui-monospace,
+    monospace;
+  white-space: nowrap;
+}
+.interact-prompt > span {
+  color: var(--neonPink);
+}
+.joystick {
+  position: fixed;
+  width: 128px;
+  height: 128px;
+  left: calc(24px + env(safe-area-inset-left));
+  bottom: calc(24px + env(safe-area-inset-bottom));
+  border: 1px solid color-mix(in srgb, var(--uiInk) 20%, transparent);
+  background: color-mix(in srgb, var(--void) 35%, transparent);
+  border-radius: 100%;
+  touch-action: none;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  pointer-events: none;
+}
+.joystick.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.stick-knob {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border: 1px solid color-mix(in srgb, var(--uiInk) 30%, transparent);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--uiInk) 10%, transparent);
+}
+.stick-cross {
+  font-size: 26px;
+  color: var(--uiDim);
+  font-weight: 200;
+}
+.travel-caption {
+  position: fixed;
+  left: 50%;
+  bottom: 90px;
+  transform: translateX(-50%);
+  text-align: center;
+  font:
+    12px "Geist Mono", ui-monospace,
+    monospace;
+  letter-spacing: 0.12em;
+  text-shadow: 0 2px 10px var(--void);
+}
+.travel-caption span {
+  display: block;
+  font-size: 9px;
+  color: var(--uiDim);
+  margin-top: 10px;
+  letter-spacing: 0.05em;
+}
+.overlay-layer {
+  position: fixed;
+  z-index: 30;
+  inset: 100px 0 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 18px 24px 76px;
+  background: linear-gradient(
+    transparent,
+    color-mix(in srgb, var(--void) 50%, transparent)
+  );
+  overflow: hidden;
+}
+.overlay-card {
+  position: relative;
+  width: min(680px, 100%);
+  max-height: 100%;
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: color-mix(in srgb, var(--void) 94%, transparent);
+  backdrop-filter: blur(25px);
+  border: 1px solid color-mix(in srgb, var(--uiInk) 14%, transparent);
+  padding: 42px 44px 28px;
+  box-shadow: 0 24px 80px color-mix(in srgb, var(--void) 65%, transparent);
+  scrollbar-width: thin;
+  scrollbar-color: var(--metalDark) transparent;
+}
+.overlay-card::-webkit-scrollbar {
+  width: 5px;
+}
+.overlay-card::-webkit-scrollbar-thumb {
+  background: var(--metalDark);
+}
+.close-card {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  color: var(--uiDim);
+  font-size: 24px;
+  font-weight: 300;
+}
+.eyebrow {
+  font:
+    9px/1.6 "Geist Mono", ui-monospace,
+    monospace;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--neonPink);
+  margin: 0 0 18px;
+}
+.overlay-card h2 {
+  font-size: clamp(30px, 3.3vw, 44px);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.045em;
+  max-width: 530px;
+  margin: 0 0 20px;
+}
+.role-line,
+.supporting {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--uiDim);
+  margin-bottom: 30px;
+}
+.role-line {
+  font:
+    10px/1.9 "Geist Mono", ui-monospace,
+    monospace;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--facade);
+  border-bottom: 1px solid var(--facade);
+  padding: 26px 0;
+  margin: 30px 0;
+  gap: 20px;
+}
+.stats strong {
+  font-size: 37px;
+  font-weight: 400;
+  letter-spacing: -0.06em;
+}
+.stats span {
+  display: block;
+  font:
+    9px/1.8 "Geist Mono", ui-monospace,
+    monospace;
+  color: var(--uiDim);
+  margin-top: 7px;
+}
+.stories article {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 18px;
+  padding: 17px 0;
+}
+.stories h3 {
+  font:
+    10px/1.8 "Geist Mono", ui-monospace,
+    monospace;
+  margin: 0;
+  color: var(--neonPink);
+}
+.stories p,
+.course-panels p,
+.help-grid p {
+  font-size: 12px;
+  line-height: 1.9;
+  color: var(--uiDim);
+  margin: 0;
+}
+.course-panels {
+  display: grid;
+  gap: 12px;
+  margin-top: 30px;
+}
+.course-panels article {
+  padding: 24px;
+  border: 1px solid var(--facade);
+}
+.course-panels h3 {
+  font-size: 17px;
+  font-weight: 400;
+  margin: 10px 0;
+}
+.course-panels p.eyebrow {
+  color: var(--neonPink);
+  font-size: 9px;
+}
+.course-panels a {
+  display: inline-block;
+  font:
+    10px "Geist Mono", ui-monospace,
+    monospace;
+  margin-top: 18px;
+  color: var(--uiInk);
+}
+.overlay-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid var(--facade);
+  font:
+    8px/1.7 "Geist Mono", ui-monospace,
+    monospace;
+  color: var(--uiDim);
+}
+.contact-channels {
+  border-top: 1px solid var(--facade);
+}
+.contact-channels a {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--facade);
+}
+.channel-index {
+  font:
+    9px "Geist Mono", ui-monospace,
+    monospace;
+  color: var(--uiDim);
+}
+.contact-channels strong {
+  font-size: 14px;
+  font-weight: 400;
+}
+.contact-channels div > span {
+  display: block;
+  font:
+    10px "Geist Mono", ui-monospace,
+    monospace;
+  color: var(--uiDim);
+  margin-top: 7px;
+}
+.channel-arrow {
+  margin-left: auto;
+  font-size: 19px;
+  color: var(--neonPink);
+}
+.contact-channels a:hover strong {
+  color: var(--neonPink);
+}
+.help-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px;
+  margin: 35px 0;
+}
+.help-grid h3 {
+  font:
+    11px "Geist Mono", ui-monospace,
+    monospace;
+}
+.text-button {
+  background: none;
+  padding: 12px 0;
+  color: var(--neonPink);
+  font:
+    11px "Geist Mono", ui-monospace,
+    monospace;
+}
+.project-controls {
+  position: fixed;
+  z-index: 25;
+  bottom: 82px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(650px, calc(100vw - 48px));
+}
+.project-copy {
+  width: 100%;
+  padding: 20px 24px;
+  background: color-mix(in srgb, var(--void) 91%, transparent);
+  border: 1px solid color-mix(in srgb, var(--uiInk) 12%, transparent);
+  backdrop-filter: blur(18px);
+  margin-bottom: 12px;
+}
+.project-copy .eyebrow {
+  margin-bottom: 8px;
+  font-size: 8px;
+}
+.project-copy h2 {
+  font-size: 26px;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  margin: 0 0 8px;
+}
+.project-copy > p:not(.eyebrow) {
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--uiDim);
+  margin: 0;
+  max-width: 570px;
+}
+.tech-tags {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  font:
+    8px "Geist Mono", ui-monospace,
+    monospace;
+  color: var(--uiDim);
+  margin-top: 14px;
+}
+.project-toolbar {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+.pager,
+.project-actions {
+  display: flex;
+  align-items: center;
+  border: 1px solid color-mix(in srgb, var(--uiInk) 15%, transparent);
+  border-radius: 40px;
+  background: color-mix(in srgb, var(--void) 92%, transparent);
+  padding: 4px;
+}
+.pager > button {
+  background: none;
+  color: var(--uiInk);
+  font-size: 25px;
+  width: 36px;
+  height: 40px;
+}
+.project-stops {
+  display: flex;
+  gap: 4px;
+}
+.project-stops button {
+  background: none;
+  color: var(--uiDim);
+  font:
+    9px "Geist Mono", ui-monospace,
+    monospace;
+  border-radius: 100%;
+  width: 30px;
+  height: 30px;
+}
+.project-stops button[aria-current="true"] {
+  color: var(--void);
+  background: var(--uiInk);
+}
+.project-actions a {
+  height: 40px;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font:
+    10px "Geist Mono", ui-monospace,
+    monospace;
+  border-radius: 30px;
+}
+.project-actions .open-project {
+  background: var(--uiInk);
+  color: var(--void);
+}
+.project-actions > button {
+  width: 36px;
+  height: 40px;
+  font-size: 21px;
+  background: none;
+  color: var(--uiDim);
+}
+.fallback-work {
+  position: fixed;
+  inset: 180px 20% 20%;
+  display: grid;
+  align-content: center;
+  gap: 24px;
+}
+.fallback-work a {
+  color: var(--neonPink);
+}
+@media (max-width: 767px) {
+  .navigation {
+    top: 18px;
+    left: 10px;
+    right: 10px;
+    gap: 10px;
+  }
+  .wordmark {
+    position: static;
+    font-size: 9px;
+    line-height: 18px;
+  }
+  nav button {
+    padding: 11px 13px;
+    font-size: 10px;
+  }
+  nav {
+    padding: 3px;
+  }
+  .world-caption {
+    left: 13px;
+  }
+  .world-caption span:first-child {
+    font-size: 14px;
+  }
+  .world-caption span:last-child {
+    font-size: 7px;
+  }
+  .utility-controls {
+    right: 16px;
+  }
+  .utility-controls button {
+    height: 36px;
+    min-width: 36px;
+  }
+  .utility-controls button span {
+    display: none;
+  }
+  .gate-content {
+    width: 80vw;
+  }
+  .gate-story {
+    font-size: 10px;
+    margin-bottom: 30px;
+  }
+  .gate-story span {
+    display: block;
+  }
+  .gate h1 {
+    font-size: clamp(78px, 20vw, 145px);
+  }
+  .enter-button {
+    margin-top: 40px;
+  }
+  .overlay-layer {
+    inset: 116px 0 0;
+    padding: 8px 14px 73px;
+  }
+  .overlay-card {
+    padding: 32px 24px 24px;
+  }
+  .overlay-card h2 {
+    font-size: 33px;
+    max-width: 90%;
+  }
+  .stories article {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+  .stats {
+    gap: 12px;
+  }
+  .stats strong {
+    font-size: 33px;
+  }
+  .stats span {
+    font-size: 8px;
+  }
+  .contact-channels a {
+    padding: 14px 0;
+    gap: 14px;
+  }
+  .contact-channels div > span {
+    font-size: 9px;
+  }
+  .supporting {
+    font-size: 12px;
+    margin-bottom: 23px;
+  }
+  .overlay-footer {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .project-controls {
+    bottom: 75px;
+    width: calc(100vw - 28px);
+  }
+  .project-toolbar {
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+  }
+  .project-copy {
+    padding: 15px 18px;
+    margin-bottom: 10px;
+  }
+  .project-copy h2 {
+    font-size: 22px;
+  }
+  .project-copy > p:not(.eyebrow) {
+    font-size: 11px;
+    line-height: 1.6;
+  }
+  .tech-tags {
+    font-size: 7px;
+    margin-top: 10px;
+    gap: 8px;
+  }
+  .project-copy .eyebrow {
+    font-size: 7px;
+  }
+  .project-actions a {
+    min-height: 40px;
+  }
+  .interact-prompt {
+    bottom: 190px;
+    font-size: 10px;
+  }
+  .help-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.utility-controls .help-toggle { order: -1; }
+.help-grid article { padding-bottom: 16px; border-bottom: 1px solid color-mix(in srgb, var(--uiInk) 13%, transparent); }
+@media (orientation: portrait) {
+  .utility-controls.mobile-tier { top: auto; bottom: calc(22px + env(safe-area-inset-bottom)); }
+}

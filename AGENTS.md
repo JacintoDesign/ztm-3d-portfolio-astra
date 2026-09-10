@@ -4,6 +4,16 @@ A walkable 3D world, moved through in first person at eye level, that doubles as
 
 ---
 
+## Approved 24H convenience-store refinement
+
+The user approved `CONVENIENCE_STORE_REVIEW.md` and instructed updating this file before implementation. Incorporate that proposal into `WORLD_BRIEF.md`, then implement its open west-side storefront, modeled convenience-store interior, and reduced decorative neon glare. This deliberately supersedes the brief's earlier no-open-shutter/no-interior rule for this one bay.
+
+The store remains non-interactive scenery, viewed from the alley, with no additional portfolio content or brand names. Preserve the walkable clamp, the three content surfaces, and the sound-off default. Record implementation dimensions derived from the approved layout in the brief and mirror all rendering settings in `lib/world.ts`; this approval does not waive the source-of-truth rule elsewhere.
+
+---
+
+The user also authorized closing one remaining ajar bay and converting the other into a contrasting shop (§19.6). This extends the open-interior exception to that second bay, with the same scenery-only and source-of-truth rules.
+
 ## The three content surfaces
 
 Content lives in exactly three places, and nowhere else. These are roles — the objects that fill them are defined in `WORLD_BRIEF.md`.

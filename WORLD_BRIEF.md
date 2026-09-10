@@ -1828,6 +1828,9 @@ The gate covers the download. Nothing about it apologises for the wait — but i
 
 ### 14.2 Audio
 
+**Current user override — 2026-09-06:** sound starts **off on every visit**. Enter never creates or resumes audio. The sound control alone may enable the procedural bed following an explicit visitor action; previous unmuted preferences do not enable it on a later visit. During development, keep sound off unless the user requests it. This supersedes the gate-triggered audio and persisted-unmuted behavior recorded below.
+
+
 All levels relative to a master that starts at **−30 dB** — retuned down three times from an original −6, each pass a further halving of the amplitude: `10^(-30/20) ≈ 0.0316` against the original `10^(-6/20) ≈ 0.501` — with a persistent mute — top-right, visible from the gate's first frame, before there is anything to mute.
 
 | Bed | Level | Notes |
@@ -2260,3 +2263,85 @@ All of §3.7. Free choices: every dimension in its table except the vending mach
 - Every door opens the real deployment.
 - The whole alley is walkable end to end in under twenty seconds, and nothing lets you out of it.
 - **A stranger, on a phone, finds the contact details in ten seconds without walking anywhere.**
+
+## 18. Approved visual refinement — 2026-09-07
+
+User-approved direction supersedes earlier settings only for the changes below. Preserve the palette, layout and sound-off default.
+
+- Drag right looks right; drag upward looks upward. Both pointer axes subtract their deltas from the camera yaw/pitch using the existing sensitivity and clamps.
+- Cars retain their source GLB palette textures and vertex colors. Palette samples may be baked into vertex colors before merging; never replace textured regions with their white material multiplier.
+- DOM typography: locally hosted Geist Sans and Geist Mono, variable weights 100–900, swap display. World labels remain system canvas text; Latin project titles use Avenir Next / Helvetica Neue at weight 500.
+- Showcase image: untinted sRGB image through an unlit, fog-free, non-tone-mapped material; opacity capped at 0.92. It stays below the bloom threshold. Title intensity 0.32 linear through an unlit material, so reflected light cannot overpower the screenshot; frame emission 0.70. Outer metal frame 0.06 m rail width, 0.045 m proud, inset light strip 0.012 m; existing board dimensions and palette retained. Title uses signWhite at 0.32 instead of pink. The image must read brighter than its caption.
+- Noodle stand: existing cart dimensions retained. Open serving counter; lower front panel in timber slats with 0.14 m pitch and 0.008 m gaps. Six pleated noren panels across the front, existing 0.42 m drop, 0.024 m pleat depth, six folds each. Two bowls of radius 0.14 m and height 0.095 m, rim thickness 0.012 m, at counter x −0.12 and 0.45, z 0.26. Broth is sodiumDeep, noodles vendGlow, scallions phoneGreen, ceramic signWhite, using existing material classes. Chopsticks radius 0.004 m, length 0.34 m, separation 0.028 m. A stockpot radius 0.19 m, height 0.25 m, wall 0.012 m, x −0.65, z −0.16, with rim, lid and handles. A back shelf at y 1.2 m, depth 0.20 m, with five stacked bowls. Three condiment bottles radius 0.025 m, height 0.12 m. Two stools at x ±0.60, z 0.78, height 0.43 m, seat radius 0.17 m, thickness 0.055 m, legs radius 0.022 m. Stool footprints participate in collision. Food prop geometry 24 radial segments, noodle curves 16 segments / 4 sides, radius 0.003 m. Curtains double-sided, roughness from fabric. No new written portfolio content.
+- Rubbish: retain existing bin dimensions and locations. Add 16 vertical ribs at 0.014 m radius, rim/lid and two loop handles radius 0.07 m with 0.012 m tube. Replace spheres with four unique deformed, tied sacks, radius from existing bin, height 0.58 m, lower bulge 0.85 radius, neck 0.10 radius, twist length 0.07 m. Twelve longitudinal creases, radial amplitude 0.065, 24 radial / 18 vertical segments. Bag color metalDark, roughness 0.38, metalness 0; asymmetric width/depth factors 1.0 / 0.8, rotation varies by quarter turn. Ground rests at kerb height. Reuse batches and shared geometry wherever possible.
+
+### 18.1 Follow-up sign, lamp and texture refinement
+
+The user's follow-up restores a luminous project title box and requests uppercase project/cart labels, body-fitted vehicle lenses, and less repetitive surfaces. These are refinements within §18's approved direction.
+
+- Project title and cart bio label are uppercase presentation of their CONTENT.md strings. Restore the previously authored title light level **1.23**; keep **0.32** as the title panel's painted magenta background opacity. The project image retains its full, crisp treatment. Reuse §18's 0.06 m metal rails, 0.012 m light strips and 0.045 m projection on the title box; the face sits inside those rails so its depth is visible. The lightbox has a graded magenta face and warm-white lettering, without reflected point-light glare.
+- Vehicle lamps keep §3.6's authored width, height, position fractions and colors. Their new lens depth is twice the authored 0.01 m proud distance. Raycast the normalized car body from each end at the intended lens centre; recess the lens into that actual surface, leaving only 0.01 m exposed. If the first lateral ray misses the body, move inward by the authored lens width until a body surface is found. No lens floats at an empty bounding-box corner.
+- Surface textures retain §3.4's texture sizes, material repeats and normal strengths. Remove the old sinusoidal stripes. Keep the existing 160 base, 70-point speckle span and 9/14-point broad variation amplitudes, using non-repeating world-space smooth noise at 3 m and 8 m scales (seed 18). Only fine aggregate grain remains in the image tile; broad damp patches are evaluated procedurally in the fragment shader, with amplitudes normalized by the existing 160 base. Sample in world metres rather than stretching a tile over each box; vary phase per placed object using its transform. All color/roughness/normal consumers use the same coordinates. No extra textures or per-frame allocations.
+
+
+## 19. Approved 24H convenience store
+
+User-approved implementation, replacing the closed/ajar-only rule for this bay.
+
+- Open the west storefront spanning z −5.2 to 1.0, beneath the existing 24H sign. Raise its shutter to the existing 2.55 m aperture head; enlarge the wound roll using the brief's existing winding formula.
+- Cut the opaque wall and backing behind this aperture. Model a 3.2 m deep interior outside the alley bounds: tiled floor, ceiling, back and side walls, two stocked shelf runs, refrigerated drink cabinets, checkout counter, register, shopping baskets and overhead fluorescent fixtures.
+- Keep the doorway threshold solid at the existing walkable boundary. The interior is scenery viewed through the opening, with no added portfolio content, brand names or clickable objects.
+- Reuse the existing palette and material classes. Interior wall/ceiling color: signWhite; floor: concrete; shelf/cabinet frames: metalDark; packages cycle existing muted crate, shutter, lantern and sodium colors. Shelf height 1.65 m, depth 0.35 m, four levels; checkout height 0.9 m; refrigerator height 1.9 m, depth 0.55 m. Packages use 0.06–0.16 m widths and 0.10–0.25 m heights. Floor tiles 0.4 m, joints 0.008 m.
+- Reduce decorative neon tube emission from 5.96 to 4.2 and sign-face emission from 4.2 to 3.1. Reduce the 24H point-light power from 130 to 65 and its reach from 16.5 to 12 m. Keep the portfolio lightbox settings intact.
+- Reuse the 24H light slot for a broad store glow at the opening: signWhite, power 65, reach 12 m. Ceiling fixtures use emission 1.34. Interior display materials use a modest 0.32 self-illumination so shelving remains readable without adding dynamic lights.
+- Batch repeated shelves, packages and fixtures. Review the integrated browser at street level before sign-off.
+
+### 19.1 Approved follow-up detailing
+
+The user requested additional store detail after pending verification. Keep the approved dimensions and palette: derive shelf lips, carton bands/folds, blank ticket holders, bottle necks/labels, refrigerator kickplate vents and door gaskets, checkout keypad, cash drawer, receipt and small merchandise tray from the existing slat gauge, joint width and package dimensions. These remain unbranded geometry in the existing instance batches. Room surfaces use the approved 0.32 level as unlit color gain to prevent the nearby store light washing out the walls; products retain physical lighting. No added dynamic lights or audio.
+
+### 19.2 User-requested contrast, softer glow and label centering
+
+Use the existing facade color for the store back wall, retaining signWhite side walls. Decorative neon light spill and the gate light use an additional 0.5 power multiplier; store and portfolio lights retain their settings. Decorative tube emission is 3.2 and sign-face emission 2.4, preserving colored glow with less bloom in road reflections. Center horizontal canvas labels by their measured actual glyph ascent/descent, rather than the font em-box middle; this corrects uppercase project and ABOUT ME labels without a font-specific offset.
+
+### 19.3 Neon faces and project-wall foundation
+
+The user clarified that neon faces should remain bright: restore decorative tube emission to 4.2 and sign emission to 3.1 while retaining §19.2's 0.5 decorative light-spill multiplier. Extend the project wall down by one kerb height beneath the reflective road plane and add a concrete footing two kerb heights tall centered at ground level, using the existing bend length, angle and wall thickness. This closes the reflection-plane seam without blocking the cross-street opening. Finish shopping basket end ribs and handles using the existing joint, gauge and package dimensions.
+
+### 19.4 Door, utility and lantern geometry audit
+
+User-requested cleanup: remove the first doorway on both alley walls where the end shutter intersects it, clip those shop runs at the gate face, and fill their remaining bay with shutter slats. Other doors receive a recessed shutter-colored leaf, lower inset panel, three hinges, latch plate and lever, all derived from the existing jamb, slat depth, door width and height. Move stacked crates clear of door leaves within their existing shop bay. Generate one downpipe per unique shop joint, excluding joints behind the gate; connect their tops to the facade with return sections and add wall-backed collars.
+
+Counter cabinet ends below its separate countertop slab; the slab ends at the authored checkout height, eliminating coplanar cabinet sides. Lanterns retain their existing radius, height and red palette, but project an additional lantern radius beyond the existing bracket length. Add mounting plate and pendant, and use 18 horizontal paper ribs with 0.008 m relief, 32 radial segments and a 128-square seeded red paper texture. Fiber grain uses existing surface grain settings; rib shadow uses the existing 0.32 panel level. Their paper uses existing paper roughness and lantern emission, multiplied by the red texture rather than uniform pink-white emission. No extra dynamic lights.
+
+Lantern bracket arms sit one-quarter lantern height above the cap with a matching pendant. Paper self-illumination is not tone-mapped and uses a black diffuse base, preserving its red color under adjacent white/neon lighting.
+
+### 19.5 Lantern clearance, soft red spill and door hardware
+
+User-requested follow-up: move any lantern overlapping a flush shop sign laterally beyond the sign half-width plus lantern radius and one jamb of clearance; move its complete bracket/cap assembly with it. Add a soft additive red wall wash per lantern, 1.1 m wide by 1.1 m tall, opacity 0.18, using a radial gradient in the existing 128-square lantern texture size and a plane just proud of the storefront header. These are batched light decals with no additional dynamic lights. Lower door inset panels to a quarter of door height with a quarter-height panel, leaving clear separation below the latch at half-height. Color the ramen projecting sign (NEON index 1) sodium yellow, including its existing light spill.
+
+### 19.6 Second storefront variation
+
+User requested closing one of the two other ajar shutters and converting the other into a contrasting store. Close east bay 1 (z −16.8 to −10.6). Open east bay 5 (z 8 to 14.2) as an unbranded late-night bakery: warm timber shelving, bread loaves and round buns, a pastry display case with open clear sightlines, stacked takeaway boxes, baking trays and a compact till. This is scenery, with no new text or interaction.
+
+Reuse the convenience store aperture arithmetic, head height, floor joint, package sizes and checkout height. Bakery depth is three-quarters of the 3.2 m convenience depth; warm wall color crateKraft, rear wall facadeWarm, timber crateTimber, bread sodium/vendGlow. Counter width is half the aperture, display height one shelf-depth above checkout; three rear shelf levels use the existing 1.65 m shelving height. Loaves radius uses the existing 0.14 m bowl radius, width twice radius, depth radius, height radius; buns half that radius. Three overhead pendant shades reuse the 0.135 m lantern radius and half its height, with fixture level 1.34. Interior surfaces use unlit color gain 0.32 to 0.92 for warm, legible stock without another dynamic light. Shared box, cylinder and sphere batches. Place the existing vending machine at z 12.6 clear of the new aperture at its outer bay edge. Keep all movement bounds unchanged.
+
+Bakery stock and wood use the existing paper roughness with warm self-illumination 0.32, retaining physical shading so bread and furniture have depth.
+
+### 19.7 Bakery fidelity and working interior illumination
+
+User requested a more detailed bakery and actual interior lighting. Add one warm downward-facing rectangular area light above the interior, using the existing cart power 28, color vendGlow, width three-quarters of the bakery aperture and depth three-quarters of the bakery depth. This explicitly adds one interior light to the previous count; no shadows. Room, timber, bread and pendant hardware now receive physical lighting with existing paper/facade material classes.
+
+Bread uses procedural 32-by-20 sphere-derived geometry with flattened bases, three diagonal scored grooves of normalized depth 0.08 and width 0.06, seeded crust color variation of 0.08 and existing sodium/vendGlow colors. Add transparent display glazing (opacity 0.12, signWhite, no depth writes), side rails, tray rims, blank shelf tickets, oven with inset dark door and control knobs, cooling rack with baking sheets, and a detailed till keypad and receipt. Derive their dimensions from existing shelf, package, joint, slat and lantern figures. Preserve all current bay dimensions and navigation.
+
+Browser calibration: bakery area-light power uses 28 × 0.32 = 8.96, retaining the warm interior illumination without blowing the bread highlights into bloom.
+
+Bread diffuse color is multiplied by the existing crateKraft tone to retain baked crust color under the overhead light.
+
+### 19.8 Bakery surface-intersection fixes
+
+Raise the complete register, screen, keypad and receipt assembly onto the display-counter top: base equals checkout height plus display height plus half the slab gauge. Recess pendant diffusers by one gauge in radius and position their top exactly at the shade underside. Separate the display top infill from perimeter rails, generate rear shelf uprights once, remove obsolete bread scoring strips now replaced by carved geometry, and offset shelf tickets clear of shelf edges by one joint. The register screen uses a box, not the cylindrical lamp batch. These corrections retain the authored dimensions and lighting.
+
+Rest the flattened bread bases on their trays/shelves by compensating the normalized 0.35 base flattening in vertical placement; pastry centers use the actual tray top (checkout plus 1.5 slat gauges).
+
+Cooling-rack upright centers are inset one slat gauge from the shelf ends so their faces cannot coincide with the side wall.
