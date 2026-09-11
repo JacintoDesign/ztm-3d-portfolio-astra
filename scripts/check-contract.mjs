@@ -8,15 +8,15 @@ function load(name){const full=path.resolve('lib',name+'.ts');if(cache.has(full)
 const {getContent,parseContent}=load('content'),content=getContent();
 const source=fs.readFileSync('CONTENT.md','utf8');
 const projectBlock=source.slice(source.indexOf('## Projects')).match(/### 01 — [\s\S]*?(?=### 02 —)/)[0];
-assert.equal(parseContent(source.replace(projectBlock,'')).projects.length,3);
-assert.equal(parseContent(source.replace('## Contact',projectBlock.replace('### 01 —','### 05 —')+'\n## Contact')).projects.length,5);
+assert.equal(parseContent(source.replace(projectBlock,'')).projects.length,content.projects.length-1);
+assert.equal(parseContent(source.replace('## Contact',projectBlock.replace('### 01 —','### 99 —')+'\n## Contact')).projects.length,content.projects.length+1);
 assert.equal(parseContent(source.replace(projectBlock,projectBlock.replace(content.projects[0].name,'A long replacement project title'))).projects[0].name,'A long replacement project title');
 let audioCreated=0;globalThis.AudioContext=class {constructor(){audioCreated++;throw new Error('Audio must not start in a muted test');}};
 load('audio').unlockAudio(true);assert.equal(audioCreated,0);
 delete globalThis.AudioContext;
-assert.equal(content.projects.length,4);assert.equal(content.channels.length,6);assert.equal(content.about.stories.length,5);
-for(const project of content.projects){assert.ok(project.name);assert.ok(project.description);assert.ok(project.tech.length);assert.match(project.url,/^https:\/\//);assert.match(project.github,/^https:\/\/github.com\//);assert.ok(fs.existsSync(path.join('public',project.screenshot)));}
-assert.equal(content.channels[0].url,'mailto:contact@jacinto.design');assert.equal(content.about.course.url,'https://zerotomastery.io/courses/learn-vibe-coding/');
+assert.equal(content.projects.length,10);assert.equal(content.channels.length,6);assert.equal(content.about.stories.length,5);
+for(const project of content.projects){assert.ok(project.name);assert.ok(project.description);assert.ok(project.tech.length);assert.match(project.url,/^https:\/\//);assert.match(project.github,/^https:\/\/github.com\//);assert.ok(fs.existsSync(path.join('public',project.screenshot.replace(/^\//,''))));}
+assert.equal(content.channels[0].url,'mailto:contact@jacinto.design');assert.equal(content.about.course.url,'https://academy.zerotomastery.io/a/aff_s02b4247/external?affcode=441520_7lacw2wa');assert.equal(content.about.now.url,'https://zerotomastery.io/courses/claude-code-bootcamp/');
 const {moveAxis,addCollider,colliders}=load('collisions');
 assert.equal(moveAxis(0,0,100,'x'),3.6);assert.equal(moveAxis(0,0,-100,'z'),-21);assert.equal(moveAxis(0,0,100,'z'),21.4);
 addCollider('test-wall',2,0,1,1);assert.equal(moveAxis(0,0,3,'x'),1.18);assert.equal(moveAxis(0,2,3,'x'),3);assert.equal(moveAxis(3,0,0,'x'),2.82);

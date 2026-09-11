@@ -125,7 +125,7 @@ Paging, the position indicator and *open* live in a **2D overlay drawn over the 
 
 ### 2.2 The food cart (bio station)
 
-Reads the About material from `CONTENT.md` — eyebrow, heading, stats, the five story panels, latest course, currently building.
+Reads the About material from `CONTENT.md` — eyebrow, heading, stats, the five story panels, foundational course, latest course.
 
 **It was a vending machine, and the cart is better for a reason worth keeping.** §3.7 already put a food cart on the east wall at `z = +19.0`, four metres from §2.1's board, and it was already **the only lit object on that stretch** — a canopy lamp over an empty counter. A bio station is *the place in the world where somebody is*, and a yatai at 3am is that; a vending machine is the opposite of it. Nothing is built to make this change: the object exists, and it is promoted from scenery to a station.
 

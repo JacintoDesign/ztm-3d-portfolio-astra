@@ -628,16 +628,25 @@ kbd {
 .project-toolbar {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 8px;
 }
 .pager,
 .project-actions {
   display: flex;
   align-items: center;
+  justify-content: center;
   border: 1px solid color-mix(in srgb, var(--uiInk) 15%, transparent);
   border-radius: 40px;
   background: color-mix(in srgb, var(--void) 92%, transparent);
   padding: 4px;
+}
+.pager {
+  flex-wrap: nowrap;
+  max-width: 100%;
+}
+.project-actions {
+  flex-wrap: wrap;
 }
 .pager > button {
   background: none;
@@ -645,10 +654,20 @@ kbd {
   font-size: 25px;
   width: 36px;
   height: 40px;
+  flex-shrink: 0;
 }
 .project-stops {
   display: flex;
+  flex-wrap: nowrap;
   gap: 4px;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x;
+}
+.project-stops::-webkit-scrollbar {
+  display: none;
 }
 .project-stops button {
   background: none;
@@ -659,6 +678,7 @@ kbd {
   border-radius: 100%;
   width: 30px;
   height: 30px;
+  flex-shrink: 0;
 }
 .project-stops button[aria-current="true"] {
   color: var(--void);
@@ -709,8 +729,9 @@ kbd {
     line-height: 18px;
   }
   nav button {
-    padding: 11px 13px;
+    padding: 8px 12px;
     font-size: 10px;
+    min-height: 34px;
   }
   nav {
     padding: 3px;
@@ -797,6 +818,12 @@ kbd {
     flex-direction: column;
     align-items: center;
     gap: 7px;
+  }
+  .pager {
+    width: 100%;
+  }
+  .project-stops {
+    flex: 1;
   }
   .project-copy {
     padding: 15px 18px;

@@ -90,7 +90,7 @@ export function parseContent(text: string): Content {
     (m) => ({ name: m[1], label: m[2], url: m[3] }),
   );
   const stories = Array.from(
-    section(text, "## Story Panels", "## Latest Course Panel").matchAll(
+    section(text, "## Story Panels", "## Foundational Course Panel").matchAll(
       /### (.+)\n([\s\S]*?)(?=### |---|$)/g,
     ),
     (m) => ({ title: m[1], text: m[2].trim() }),
@@ -109,7 +109,7 @@ export function parseContent(text: string): Content {
         label: m[2],
       })),
       stories,
-      course: panel(section(text, "## Latest Course Panel", "## Now Panel")),
+      course: panel(section(text, "## Foundational Course Panel", "## Now Panel")),
       now: panel(section(text, "## Now Panel", "## Projects")),
     },
     contact: {

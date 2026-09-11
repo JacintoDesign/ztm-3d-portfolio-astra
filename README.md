@@ -87,7 +87,7 @@ Geist Sans and Geist Mono are served locally from `public/fonts`, under the incl
 
 ### Project screenshots
 
-The showcase surface's images (`/vibemail.jpg`, `/waypoint.jpg`, `/music.jpg`, `/scoundrel.jpg`) are screenshots of the author's own projects, listed with their sources in [`CONTENT.md`](CONTENT.md).
+The showcase surface's images are screenshots of the author's own projects, listed with their sources in [`CONTENT.md`](CONTENT.md).
 
 ## License
 

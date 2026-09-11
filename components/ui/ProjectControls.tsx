@@ -11,7 +11,9 @@ import {
 } from "@/lib/store";
 export default function ProjectControls({ content }: { content: Content }) {
   const s = useWorldState(),
-    start = useRef(0);
+    start = useRef(0),
+    fromStops = useRef(false),
+    stops = useRef<HTMLDivElement>(null);
   const project = content.projects[s.project];
   useEffect(() => {
     if (
@@ -27,6 +29,16 @@ export default function ProjectControls({ content }: { content: Content }) {
     }, BOARD.dwell);
     return () => clearInterval(timer);
   }, [s.entered, s.reduced, s.manualPaging, content.projects.length]);
+  useEffect(() => {
+    const track = stops.current;
+    const current = track?.querySelector<HTMLElement>('[aria-current="true"]');
+    if (!track || !current) return;
+    const left = current.offsetLeft - (track.clientWidth - current.offsetWidth) / 2;
+    track.scrollTo({
+      left: Math.max(0, left),
+      behavior: getState().reduced ? "auto" : "smooth",
+    });
+  }, [s.project]);
   if (!project || s.mode !== "locked" || s.destination !== "work" || !s.arrived)
     return null;
   return (
@@ -35,8 +47,12 @@ export default function ProjectControls({ content }: { content: Content }) {
       aria-label="Project showcase"
       onTouchStart={(e) => {
         start.current = e.touches[0].clientX;
+        fromStops.current = Boolean(
+          (e.target as HTMLElement).closest(".project-stops"),
+        );
       }}
       onTouchEnd={(e) => {
+        if (fromStops.current) return;
         const dx = e.changedTouches[0].clientX - start.current;
         if (Math.abs(dx) > 50)
           pageProject(dx < 0 ? 1 : -1, content.projects.length);
@@ -55,7 +71,7 @@ export default function ProjectControls({ content }: { content: Content }) {
           >
             ‹
           </button>
-          <div className="project-stops">
+          <div className="project-stops" ref={stops}>
             {content.projects.map((p, i) => (
               <button
                 key={p.name}
